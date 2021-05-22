@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+
+{% block title%}All songs{% endblock title%}
+{% block body%}
+<div style="text-align: center; margin-top:20px">
+    {%if qs%}
+    <h4>Your search for {{query}}:</h4>
+    {% else%}
+    <h4>No result found for: {{query}}</h4>
+    {% endif %}
+</div>
+ 
+    <div class="container" style="padding-top: 2%; margin-left: 5%">
+        <div class="row" style="padding-left: 5%; margin-top:5%">
+          {%for i in songs %}
+
+         
+          <div class="col-md-6 col-lg-4 ">
+           <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
+             <img src="media/{{i.image}}" class="card-img-top" alt="...">
+             <div class="card-body">
+               <h5 class="card-title">
+                 {{i.name}}
+               </h5>
+               <p class="card-text">{{i.tags}}</p>
+               {% if user.is_authenticated %}
+               <form action="history" method="POST">
+                {% csrf_token%}
+               <input type="hidden" name="music_id" value ={{i.song_id}}>
+               <a href="allsongs/{{i.song_id}}"><button class="btn btn-outline-danger">Listen</button></a>
+              </form>
+              {% else%}
+              <a href="allsongs/{{i.song_id}}" class="btn btn-outline-danger">Listen</a>
+              {% endif %}
+             </div>
+           </div>
+          </div>
+          {% endfor %}
+       </div>
+ </div>
+{% endblock %}

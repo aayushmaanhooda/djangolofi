@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% load static%}
+{% block title%}lofiHome{% endblock title%}
+{% block body %}
+<div>
+    <h1 style="text-align: center;">History</h1>
+</div>
+{% if history|length < 1%}
+<h2 style="text-align: center; margin-top:20%"> You have no songs in listen later</h2>
+{% endif %}
+
+{%for i in history %}
+<div class="col-md-6 col-lg-4 ">
+ <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
+   <img src="media/{{i.image}}" class="card-img-top" alt="...">
+   <div class="card-body">
+     <h5 class="card-title">
+       {{i.name}}
+     </h5>
+     <p class="card-text">{{i.tags}}</p>
+     <a href="allsongs/{{i.song_id}}" class="btn btn-outline-danger">Listen</a>
+   </div>
+ </div>
+</div>
+{% endfor %}
+
+{% endblock %}
